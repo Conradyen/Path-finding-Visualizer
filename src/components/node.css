@@ -24,6 +24,19 @@
   animation-play-state: running;
 }
 
+.visited-1 {
+  background-color: rgb(15, 157, 88);
+}
+.visited-2 {
+  background-color: rgb(219, 68, 55);
+}
+.visited-3 {
+  background-color: rgb(244, 160, 0);
+}
+.visited-4 {
+  background-color: rgb(66, 133, 244);
+}
+
 @keyframes visitedAnimation {
   0% {
     transform: scale(0.3);

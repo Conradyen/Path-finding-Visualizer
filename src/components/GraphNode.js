@@ -1,5 +1,7 @@
 import React from "react";
 import "./node.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function GraphNode({
   key,

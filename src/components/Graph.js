@@ -60,6 +60,7 @@ export default function Graph() {
   const [endROW, setendROW] = useState(10);
   const [endCOL, setendCOL] = useState(35);
   const [useAlgo, setAlgo] = useState(1);
+  const [algoDone, setalgoDone] = useState(false);
 
   const getNewGridWithStartMoved = (grid, row, col) => {
     const newGrid = grid.slice();
@@ -135,8 +136,14 @@ export default function Graph() {
   const handleMouseUp = () => {
     if (startMove) {
       setstartMove(false);
+      // if (algoDone) {
+      //   handelSPafterAlgocomplete();
+      // }
     } else if (endMove) {
       setEndMove(false);
+      // if (algoDone) {
+      //   handelSPafterAlgocomplete();
+      // }
     } else if (mouseDown) {
       setMouse(false);
     }
@@ -170,6 +177,51 @@ export default function Graph() {
 
   const handelAlgoChange = (e) => {
     setAlgo(e.target.value);
+  };
+
+  const directShowVisitedNode = (
+    visitedNodesInOrder,
+    nodesInShortestPathOrder
+  ) => {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        directShowShortestPath(nodesInShortestPathOrder);
+        return;
+      }
+      const node = visitedNodesInOrder[i];
+      document.getElementById(`node-${node.row}-${node.col}`).className =
+        "node node-visited";
+    }
+  };
+
+  const directShowShortestPath = (nodesInShortestPathOrder) => {
+    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+      const node = nodesInShortestPathOrder[i];
+      document.getElementById(`node-${node.row}-${node.col}`).className =
+        "node node-shortest-path";
+    }
+  };
+
+  const handelSPafterAlgocomplete = () => {
+    const startNode = grid[startROW][startCOL];
+    const finishNode = grid[endROW][endCOL];
+    handleResetButtonClick();
+    var visitedNodesInOrder;
+    switch (useAlgo) {
+      case 2:
+        visitedNodesInOrder = aStar(grid, startNode, finishNode);
+        break;
+      case 3:
+        visitedNodesInOrder = greedyBFS(grid, startNode, finishNode);
+        break;
+      case 4:
+        visitedNodesInOrder = dfs(grid, startNode, finishNode);
+        break;
+      default:
+        visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    }
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    directShowVisitedNode(visitedNodesInOrder, nodesInShortestPathOrder);
   };
 
   const animateVisitedNode = (
@@ -220,6 +272,7 @@ export default function Graph() {
     }
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateVisitedNode(visitedNodesInOrder, nodesInShortestPathOrder);
+    setalgoDone(true);
   };
 
   return (

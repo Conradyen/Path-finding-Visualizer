@@ -11,6 +11,10 @@ export function sortNodesAstar(unvisitedNodes, endNode) {
   );
 }
 
+export function NodeCompareElement(Node) {
+  return Node.distance;
+}
+
 export function updateUnvisitedNeighbors(node, grid, distance) {
   const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
   for (const neighbor of unvisitedNeighbors) {
@@ -41,9 +45,9 @@ export function getAllNodes(grid) {
 
 //calculate distance between start and end.
 export function euclideanDistance(startNode, endNode) {
-  const col_d = Math.pow(endNode.col - startNode.col, 2);
-  const row_d = Math.pow(endNode.row - startNode.row, 2);
-  return Math.sqrt(col_d + row_d);
+  const col_d = Math.abs(endNode.col - startNode.col);
+  const row_d = Math.abs(endNode.row - startNode.row);
+  return col_d + row_d;
 }
 
 // Backtracks from the finishNode to find the shortest path.

@@ -3,7 +3,10 @@ import GraphNode from "./GraphNode";
 import "./graph.css";
 import { dijkstra } from "../algorithms/dijkstra";
 import { aStar } from "../algorithms/aStar";
+import { greedyBFS } from "../algorithms/greedyBFS";
+import { dfs } from "../algorithms/dfs";
 import { getNodesInShortestPathOrder } from "../algorithms/utils";
+import Controller from "./Controller";
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 15;
@@ -29,6 +32,7 @@ const getNewNode = (col, row) => {
     isStart: row === START_NODE_ROW && col === START_NODE_COL,
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
+    cost: Infinity,
     isVisited: false,
     isWall: false,
     previousNode: null,
@@ -55,6 +59,7 @@ export default function Graph() {
   const [startCOL, setstartCOL] = useState(15);
   const [endROW, setendROW] = useState(10);
   const [endCOL, setendCOL] = useState(35);
+  const [useAlgo, setAlgo] = useState(1);
 
   const getNewGridWithStartMoved = (grid, row, col) => {
     const newGrid = grid.slice();
@@ -163,6 +168,10 @@ export default function Graph() {
     }
   };
 
+  const handelAlgoChange = (e) => {
+    setAlgo(e.target.value);
+  };
+
   const animateVisitedNode = (
     visitedNodesInOrder,
     nodesInShortestPathOrder
@@ -192,31 +201,29 @@ export default function Graph() {
     }
   };
 
-  const visualizeDijkstra = () => {
+  const handelStartBtnClick = () => {
     const startNode = grid[startROW][startCOL];
     const finishNode = grid[endROW][endCOL];
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    animateVisitedNode(visitedNodesInOrder, nodesInShortestPathOrder);
-  };
-
-  const visualizeAStar = () => {
-    const startNode = grid[startROW][startCOL];
-    const finishNode = grid[endROW][endCOL];
-    const visitedNodesInOrder = aStar(grid, startNode, finishNode);
+    var visitedNodesInOrder;
+    switch (useAlgo) {
+      case 2:
+        visitedNodesInOrder = aStar(grid, startNode, finishNode);
+        break;
+      case 3:
+        visitedNodesInOrder = greedyBFS(grid, startNode, finishNode);
+        break;
+      case 4:
+        visitedNodesInOrder = dfs(grid, startNode, finishNode);
+        break;
+      default:
+        visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    }
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateVisitedNode(visitedNodesInOrder, nodesInShortestPathOrder);
   };
 
   return (
     <React.Fragment>
-      <button onClick={() => visualizeDijkstra()}>
-        Visualize Dijkstra's Algorithm
-      </button>
-      <button onClick={() => visualizeAStar()}>
-        Visualize aStar Algorithm
-      </button>
-      <button onClick={() => handleResetButtonClick()}>Reset</button>
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
@@ -243,6 +250,12 @@ export default function Graph() {
           );
         })}
       </div>
+      <Controller
+        useAlgo={useAlgo}
+        handelAlgoChange={handelAlgoChange}
+        handelStartBtnClick={handelStartBtnClick}
+        handleResetButtonClick={handleResetButtonClick}
+      ></Controller>
     </React.Fragment>
   );
 }

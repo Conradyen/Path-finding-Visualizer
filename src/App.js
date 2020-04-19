@@ -6,8 +6,8 @@ import Label from "./components/label";
 function App() {
   return (
     <div className="App">
-      <Graph></Graph>
       <Label></Label>
+      <Graph></Graph>
     </div>
   );
 }

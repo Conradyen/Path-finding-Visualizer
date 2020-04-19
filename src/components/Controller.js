@@ -20,6 +20,7 @@ export default function Controller({
   handelAlgoChange,
   handelStartBtnClick,
   handleResetButtonClick,
+  handleClearWall,
 }) {
   const classes = useStyles();
   return (
@@ -69,6 +70,15 @@ export default function Controller({
               onClick={() => handleResetButtonClick()}
             >
               Reset
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleClearWall()}
+            >
+              Clear Obstacle
             </Button>
           </Grid>
         </Grid>

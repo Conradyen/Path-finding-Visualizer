@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 
 export default function Label() {
   return (
-    <div>
+    <div className="top-label">
       <Paper elevation={0}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item>

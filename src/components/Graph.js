@@ -136,14 +136,14 @@ export default function Graph() {
   const handleMouseUp = () => {
     if (startMove) {
       setstartMove(false);
-      // if (algoDone) {
-      //   handelSPafterAlgocomplete();
-      // }
+      if (algoDone) {
+        handelSPafterAlgocomplete();
+      }
     } else if (endMove) {
       setEndMove(false);
-      // if (algoDone) {
-      //   handelSPafterAlgocomplete();
-      // }
+      if (algoDone) {
+        handelSPafterAlgocomplete();
+      }
     } else if (mouseDown) {
       setMouse(false);
     }
@@ -155,6 +155,7 @@ export default function Graph() {
     setstartCOL(START_NODE_COL);
     setendROW(FINISH_NODE_ROW);
     setendCOL(FINISH_NODE_COL);
+    setalgoDone(false);
     for (let i = 0; i < grid.length; i++) {
       for (let j = 0; j < grid[0].length; j++) {
         const node = grid[i][j];
@@ -175,8 +176,51 @@ export default function Graph() {
     }
   };
 
+  const handleClearWall = () => {
+    const newGrid = grid.slice();
+    for (let i = 0; i < newGrid.length; i++) {
+      for (let j = 0; j < newGrid[0].length; j++) {
+        const node = newGrid[i][j];
+        if (node.isWall) {
+          node.isWall = false;
+        }
+      }
+    }
+    setGrid(newGrid);
+  };
+
+  const resetAllDistance = () => {
+    const newGrid = grid.slice();
+    for (let i = 0; i < newGrid.length; i++) {
+      for (let j = 0; j < newGrid[0].length; j++) {
+        const node = newGrid[i][j];
+        node.distance = Infinity;
+        node.cost = Infinity;
+        node.isVisited = false;
+      }
+    }
+    setGrid(newGrid);
+  };
+
   const handelAlgoChange = (e) => {
     setAlgo(e.target.value);
+  };
+
+  const resetAllClassName = () => {
+    for (let row = 0; row < 20; row++) {
+      for (let col = 0; col < 50; col++) {
+        if (
+          document.getElementById(`node-${row}-${col}`).className !==
+            "node node-finish" ||
+          document.getElementById(`node-${row}-${col}`).className !==
+            "node node-start" ||
+          document.getElementById(`node-${row}-${col}`).className !==
+            "node node-wall"
+        ) {
+          document.getElementById(`node-${row}-${col}`).className = "node";
+        }
+      }
+    }
   };
 
   const directShowVisitedNode = (
@@ -205,7 +249,8 @@ export default function Graph() {
   const handelSPafterAlgocomplete = () => {
     const startNode = grid[startROW][startCOL];
     const finishNode = grid[endROW][endCOL];
-    handleResetButtonClick();
+    resetAllDistance();
+    resetAllClassName();
     var visitedNodesInOrder;
     switch (useAlgo) {
       case 2:
@@ -256,6 +301,7 @@ export default function Graph() {
   const handelStartBtnClick = () => {
     const startNode = grid[startROW][startCOL];
     const finishNode = grid[endROW][endCOL];
+    resetAllDistance();
     var visitedNodesInOrder;
     switch (useAlgo) {
       case 2:
@@ -308,6 +354,7 @@ export default function Graph() {
         handelAlgoChange={handelAlgoChange}
         handelStartBtnClick={handelStartBtnClick}
         handleResetButtonClick={handleResetButtonClick}
+        handleClearWall={handleClearWall}
       ></Controller>
     </React.Fragment>
   );

@@ -210,12 +210,14 @@ export default function Graph() {
     for (let row = 0; row < 20; row++) {
       for (let col = 0; col < 50; col++) {
         if (
-          document.getElementById(`node-${row}-${col}`).className !==
-            "node node-finish" ||
-          document.getElementById(`node-${row}-${col}`).className !==
-            "node node-start" ||
-          document.getElementById(`node-${row}-${col}`).className !==
-            "node node-wall"
+          !(
+            document.getElementById(`node-${row}-${col}`).className ===
+              "node node-finish" ||
+            document.getElementById(`node-${row}-${col}`).className ===
+              "node node-start" ||
+            document.getElementById(`node-${row}-${col}`).className ===
+              "node node-wall"
+          )
         ) {
           document.getElementById(`node-${row}-${col}`).className = "node";
         }

@@ -7,6 +7,8 @@ import { greedyBFS } from "../algorithms/greedyBFS";
 import { dfs } from "../algorithms/dfs";
 import { getNodesInShortestPathOrder } from "../algorithms/utils";
 import Controller from "./Controller";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 15;
@@ -197,6 +199,8 @@ export default function Graph() {
         node.distance = Infinity;
         node.cost = Infinity;
         node.isVisited = false;
+        node.previousNode = null;
+        newGrid[i][j] = node;
       }
     }
     setGrid(newGrid);
@@ -223,6 +227,10 @@ export default function Graph() {
         }
       }
     }
+    document.getElementById(`node-${startROW}-${startCOL}`).className =
+      "node node-start";
+    document.getElementById(`node-${endROW}-${endCOL}`).className =
+      "node node-finish";
   };
 
   const directShowVisitedNode = (
@@ -249,10 +257,11 @@ export default function Graph() {
   };
 
   const handelSPafterAlgocomplete = () => {
-    const startNode = grid[startROW][startCOL];
-    const finishNode = grid[endROW][endCOL];
     resetAllDistance();
     resetAllClassName();
+    const startNode = grid[startROW][startCOL];
+    const finishNode = grid[endROW][endCOL];
+
     var visitedNodesInOrder;
     switch (useAlgo) {
       case 2:
@@ -282,6 +291,8 @@ export default function Graph() {
         }, 10 * i);
         return;
       }
+      if (visitedNodesInOrder[i] === grid[startROW][startCOL]) continue;
+      if (visitedNodesInOrder[i] === grid[endROW][endCOL]) continue;
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
@@ -292,6 +303,8 @@ export default function Graph() {
 
   const animateShortestPath = (nodesInShortestPathOrder) => {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+      if (nodesInShortestPathOrder[i] === grid[startROW][startCOL]) continue;
+      if (nodesInShortestPathOrder[i] === grid[endROW][endCOL]) continue;
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
@@ -358,6 +371,9 @@ export default function Graph() {
         handleResetButtonClick={handleResetButtonClick}
         handleClearWall={handleClearWall}
       ></Controller>
+      <a href="https://github.com/Conradyen/Path-finding-Visualizer">
+        <FontAwesomeIcon icon={faGithub} size="3x" color="#7a7979" />
+      </a>
     </React.Fragment>
   );
 }

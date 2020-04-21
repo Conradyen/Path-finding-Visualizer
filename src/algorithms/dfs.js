@@ -11,6 +11,7 @@ function dfsHelper(node, grid, finishNode, visitedNodesInOrder) {
     if (neighbor.isWall) continue;
     if (!neighbor.visited) {
       neighbor.previousNode = node;
+      neighbor.visited = true;
       var pathFound = dfsHelper(
         neighbor,
         grid,

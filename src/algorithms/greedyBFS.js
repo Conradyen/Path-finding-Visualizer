@@ -12,10 +12,8 @@ export function greedyBFS(grid, startNode, finishNode) {
   while (!q.isEmpty()) {
     // sortNodesAstar(unvisitedNodes, finishNode);
     const closestNode = q.dequeue();
-    // If we encounter a wall, we skip it.
+    closestNode.isVisited = true;
     if (closestNode.isWall) continue;
-    // If the closest node is at a distance of infinity,
-    // we must be trapped and should therefore stop.
     const unvisitedNeighbors = getUnvisitedNeighbors(closestNode, grid);
     for (const neighbor of unvisitedNeighbors) {
       if (neighbor.visited) continue;
@@ -25,8 +23,8 @@ export function greedyBFS(grid, startNode, finishNode) {
       visitedNodesInOrder.push(neighbor);
       q.enqueue(neighbor);
     }
-    closestNode.isVisited = true;
-    visitedNodesInOrder.push(closestNode);
+
     if (closestNode === finishNode) return visitedNodesInOrder;
+    visitedNodesInOrder.push(closestNode);
   }
 }

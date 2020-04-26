@@ -32,9 +32,14 @@ export default function Label() {
             <div>Obstacle node</div>
           </Grid>
           <Grid item>
+            <div className="node visited-3"></div>
+          </Grid>
+          <Grid item>
+            <div>Path</div>
+          </Grid>
+          <Grid item>
             <div className="node visited-1"></div>
             <div className="node visited-2"></div>
-            <div className="node visited-3"></div>
             <div className="node visited-4"></div>
           </Grid>
           <Grid item>

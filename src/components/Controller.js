@@ -41,7 +41,6 @@ export default function Controller({
                 <MenuItem value={1}>Dijkstra</MenuItem>
                 <MenuItem value={2}>A Star</MenuItem>
                 <MenuItem value={3}>BFS</MenuItem>
-                <MenuItem value={4}>DFS</MenuItem>
               </Select>
             </FormControl>
           </Grid>

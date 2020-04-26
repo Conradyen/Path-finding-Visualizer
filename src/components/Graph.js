@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import GraphNode from "./GraphNode";
 import "./graph.css";
+import { DndProvider } from "react-dnd";
+import Backend from "react-dnd-html5-backend";
 import { dijkstra } from "../algorithms/dijkstra";
 import { aStar } from "../algorithms/aStar";
 import { greedyBFS } from "../algorithms/greedyBFS";
@@ -161,19 +163,8 @@ export default function Graph() {
     for (let i = 0; i < grid.length; i++) {
       for (let j = 0; j < grid[0].length; j++) {
         const node = grid[i][j];
-        if (node.row === START_NODE_ROW && node.col === START_NODE_COL) {
-          document.getElementById(`node-${node.row}-${node.col}`).className =
-            "node node-start";
-        } else if (
-          node.row === FINISH_NODE_ROW &&
-          node.col === FINISH_NODE_COL
-        ) {
-          document.getElementById(`node-${node.row}-${node.col}`).className =
-            "node node-finish";
-        } else {
-          document.getElementById(`node-${node.row}-${node.col}`).className =
-            "node";
-        }
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node";
       }
     }
   };
@@ -227,10 +218,10 @@ export default function Graph() {
         }
       }
     }
-    document.getElementById(`node-${startROW}-${startCOL}`).className =
-      "node node-start";
-    document.getElementById(`node-${endROW}-${endCOL}`).className =
-      "node node-finish";
+    // document.getElementById(`node-${startROW}-${startCOL}`).className =
+    //   "node node-start";
+    // document.getElementById(`node-${endROW}-${endCOL}`).className =
+    //   "node node-finish";
   };
 
   const directShowVisitedNode = (
@@ -263,21 +254,9 @@ export default function Graph() {
     const finishNode = grid[endROW][endCOL];
 
     var visitedNodesInOrder;
-    switch (useAlgo) {
-      case 2:
-        visitedNodesInOrder = aStar(grid, startNode, finishNode);
-        break;
-      case 3:
-        visitedNodesInOrder = greedyBFS(grid, startNode, finishNode);
-        break;
-      case 4:
-        visitedNodesInOrder = dfs(grid, startNode, finishNode);
-        break;
-      default:
-        visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-    }
+    visitedNodesInOrder = aStar(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    directShowVisitedNode(visitedNodesInOrder, nodesInShortestPathOrder);
+    directShowShortestPath(nodesInShortestPathOrder);
   };
 
   const animateVisitedNode = (
@@ -338,32 +317,36 @@ export default function Graph() {
 
   return (
     <React.Fragment>
-      <div className="grid">
-        {grid.map((row, rowIdx) => {
-          return (
-            <div key={rowIdx} className="graphRow">
-              {row.map((node, nodeIdx) => {
-                const { row, col, isFinish, isStart, isWall } = node;
-                return (
-                  <GraphNode
-                    key={nodeIdx}
-                    col={col}
-                    isFinish={isFinish}
-                    isStart={isStart}
-                    isWall={isWall}
-                    mouseIsPressed={mouseDown}
-                    onMouseDown={(row, col) => handleMouseDown(row, col)}
-                    onMouseEnter={(row, col) => handleMouseEnter(row, col)}
-                    onMouseUp={() => handleMouseUp()}
-                    onMouseOut={(row, col) => handleMouseOut(row, col)}
-                    row={row}
-                  ></GraphNode>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+      <DndProvider backend={Backend}>
+        <div className="grid">
+          {grid.map((row, rowIdx) => {
+            return (
+              <div key={rowIdx} className="graphRow">
+                {row.map((node, nodeIdx) => {
+                  const { row, col, isFinish, isStart, isWall } = node;
+                  return (
+                    <React.Fragment>
+                      <GraphNode
+                        key={nodeIdx}
+                        col={col}
+                        isFinish={isFinish}
+                        isStart={isStart}
+                        isWall={isWall}
+                        mouseIsPressed={mouseDown}
+                        onMouseDown={(row, col) => handleMouseDown(row, col)}
+                        onMouseEnter={(row, col) => handleMouseEnter(row, col)}
+                        onMouseUp={() => handleMouseUp()}
+                        onMouseOut={(row, col) => handleMouseOut(row, col)}
+                        row={row}
+                      ></GraphNode>
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </DndProvider>
       <Controller
         useAlgo={useAlgo}
         handelAlgoChange={handelAlgoChange}

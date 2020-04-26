@@ -1,5 +1,7 @@
 import React from "react";
 import "./node.css";
+import Overlay from "./overlay";
+
 export default function GraphNode({
   key,
   col,
@@ -13,13 +15,7 @@ export default function GraphNode({
   onMouseOut,
   row,
 }) {
-  const extraClassName = isFinish
-    ? "node-finish"
-    : isStart
-    ? "node-start"
-    : isWall
-    ? "node-wall"
-    : "";
+  const extraClassName = isWall ? "node-wall" : "";
   return (
     <div
       id={`node-${row}-${col}`}
@@ -28,6 +24,8 @@ export default function GraphNode({
       onMouseEnter={() => onMouseEnter(row, col)}
       onMouseUp={() => onMouseUp()}
       onMouseOut={() => onMouseOut(row, col)}
-    ></div>
+    >
+      <Overlay color={isStart ? "red" : isFinish ? "green" : null} />
+    </div>
   );
 }

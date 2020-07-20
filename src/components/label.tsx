@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
-export default function Label() {
+const Label = () => {
   return (
     <div className="top-label">
       <Paper elevation={0}>
@@ -20,7 +20,7 @@ export default function Label() {
             <div>Start node</div>
           </Grid>
           <Grid item>
-            <div className="node"></div>
+            <div className="node node-unvivited"></div>
           </Grid>
           <Grid item>
             <div>Unvisited node</div>
@@ -32,7 +32,7 @@ export default function Label() {
             <div>Obstacle node</div>
           </Grid>
           <Grid item>
-            <div className="node visited-3"></div>
+            <div className="node visited-2"></div>
           </Grid>
           <Grid item>
             <div>Path</div>
@@ -40,7 +40,7 @@ export default function Label() {
           <Grid item>
             <div className="node visited-1"></div>
             <div className="node visited-2"></div>
-            <div className="node visited-4"></div>
+            <div className="node visited-3"></div>
           </Grid>
           <Grid item>
             <div>Visited node</div>
@@ -49,4 +49,6 @@ export default function Label() {
       </Paper>
     </div>
   );
-}
+};
+
+export default Label;

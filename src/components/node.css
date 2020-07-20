@@ -1,16 +1,22 @@
 .node {
   width: 25px;
   height: 25px;
-  outline: 1px solid rgb(135, 136, 138);
+  /* outline: 1px solid rgb(135, 136, 138); */
   display: inline-block;
 }
 
 .node-finish {
   background-color: rgb(233, 4, 4);
+  outline: 1px solid rgb(135, 136, 138);
+}
+.node-unvivited {
+  background-color: #f4f4f4;
+  outline: 1px solid rgb(135, 136, 138);
 }
 
 .node-start {
   background-color: green;
+  outline: 1px solid rgb(135, 136, 138);
 }
 
 .node-visited {
@@ -26,31 +32,34 @@
 
 .visited-1 {
   background-color: rgb(15, 157, 88);
+  outline: 1px solid rgb(135, 136, 138);
 }
 .visited-2 {
-  background-color: rgb(219, 68, 55);
+  background-color: rgb(244, 160, 0);
+  outline: 1px solid rgb(135, 136, 138);
 }
 .visited-3 {
-  background-color: rgb(244, 160, 0);
-}
-.visited-4 {
   background-color: rgb(66, 133, 244);
+  outline: 1px solid rgb(135, 136, 138);
 }
 
 @keyframes visitedAnimation {
   0% {
     transform: scale(0.3);
-    background-color: rgb(15, 157, 88);
+    /* background-color: rgb(66, 133, 244); */
     border-radius: 100%;
   }
 
   50% {
-    background-color: rgb(219, 68, 55);
+    transform: scale(0.6);
+    background-color: rgb(244, 160, 0);
+    border-radius: 100%;
   }
 
   75% {
     transform: scale(1.2);
-    background-color: rgb(244, 160, 0);
+    background-color: rgb(15, 157, 88);
+    border-radius: 100%;
   }
 
   100% {
@@ -60,7 +69,7 @@
 }
 
 .node-wall {
-  background-color: rgb(135, 136, 138);
+  background-color: #3fa7d6;
 }
 
 .node-shortest-path {
@@ -103,6 +112,31 @@
 }
 
 @keyframes newStartEndPoint {
+  0% {
+    transform: scale(0.6);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.node-new-wall {
+  animation-name: newWall;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes newWall {
   0% {
     transform: scale(0.6);
   }

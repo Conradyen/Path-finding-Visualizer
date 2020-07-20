@@ -1,6 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
 .App {
+  height: 1vh;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 .top-label {
-  margin: 30px;
+  margin: 20px;
+  margin-bottom: 5px;
+}
+
+.grid {
+  margin: 0px;
 }

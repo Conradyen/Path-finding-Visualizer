@@ -1,4 +1,5 @@
-import { sortNodes, updateUnvisitedNeighbors, getAllNodes } from "./utils";
+// import { sortNodes, updateUnvisitedNeighbors, getAllNodes } from "./utils";
+import { INode, IAction } from "../constant/ITypes";
 /**
  * function BellmanFord(list vertices, list edges, vertex source) is
     ::distance[], predecessor[]
@@ -28,4 +29,4 @@ import { sortNodes, updateUnvisitedNeighbors, getAllNodes } from "./utils";
     return distance[], predecessor[]
  */
 
-export function bellmanFord() {}
+export function* bellmanFord(): IterableIterator<IAction> {}

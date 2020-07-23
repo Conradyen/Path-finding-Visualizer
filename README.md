@@ -1,6 +1,8 @@
 # Path-finding-Visualizer
 
 ![](https://github.com/Conradyen/Path-finding-Visualizer/workflows/Greet%20Everyone/badge.svg)
+[![npm](https://img.shields.io/npm/v/awesome-badges.svg)](https://github.com/Conradyen/Path-finding-Visualizer)
+
 
 After watchinging [clementmihailescu's project turtorial](https://github.com/clementmihailescu/Pathfinding-Visualizer) I am amaze by the project idea and decide to build one. I learned a lot and having a lots of fun building th project. Hope you enjoy playing with it.
 
